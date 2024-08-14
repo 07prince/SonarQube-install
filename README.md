@@ -61,3 +61,53 @@ mangae jenkins --> plugins ----> available plugins ---> search ---> sonarQube sc
 
 
 
+ # code for sonarqube in jenkins 
+
+ stage('Static Code Analysis') {
+      environment {
+        SONAR_URL = "http://34.201.116.83:9000"
+      }
+      steps {
+        withCredentials([string(credentialsId: 'sonarqube', variable: 'SONAR_AUTH_TOKEN')]) {
+          sh 'cd java-maven-sonar-argocd-helm-k8s/spring-boot-app && mvn sonar:sonar -Dsonar.login=$SONAR_AUTH_TOKEN -Dsonar.host.url=${SONAR_URL}'
+        }
+      }
+    }
+
+
+
+# commands for the sonarqube (used to in the code)
+
+1. Java with Maven
+Command: mvn sonar:sonar
+
+2.Java with Gradle
+Command: ./gradlew sonarqube
+
+3.Python
+Command: sonar-scanner -Dsonar.projectKey=my-python-project -Dsonar.sources=.
+
+
+4. JavaScript / Node.js
+Command: sonar-scanner
+
+
+5.C# / .NET
+Command: dotnet sonarscanner begin /d:sonar.host.url=${SONAR_URL} /d:sonar.login=$SONAR_AUTH_TOKEN && dotnet build && dotnet sonarscanner end /d:sonar.login=$SONAR_AUTH_TOKEN
+
+
+
+
+
+6.PHP
+Command: sonar-scanner
+
+
+7.Ruby
+Command: sonar-scanner
+
+
+
+
+8.Go
+Command: sonar-scanner
